@@ -10,6 +10,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+app.get("/",(req,res)=>{
+  res.send("Make POST Request to the Server");
+})
+
 app.post('/translate',async (req,res)=>{
     const data = req.body;
     console.log(data);
