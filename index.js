@@ -30,4 +30,26 @@ app.post('/translate',async (req,res)=>{
     res.send(await response.data);
 });
 
+app.post("/tts", async (req, res) => {
+  const data = req.body;
+  // console.log(data);
+  const options = {
+    method: 'POST',
+    url: 'http://parthbhuva20.pythonanywhere.com/tts',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: data,
+    responseType: 'arraybuffer', // set response type to arraybuffer
+  };
+  const response = await axios(options);
+  const fileData = response.data;
+  res.set({ // set headers for the response
+    'Content-Disposition': 'attachment; filename=audio.mp3',
+    'Content-Type': 'audio/mpeg',
+  });
+  res.type('audio/mpeg');
+  res.send(fileData); // send the file data
+});
+
 app.listen(5000);
